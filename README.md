@@ -1,6 +1,6 @@
 # flask-iot
  
-Deployed but still have more updated
+Deployed but still in development
 
 For demo:
 Email : dondon@gmail.com
