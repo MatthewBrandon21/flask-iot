@@ -228,6 +228,6 @@ def not_found(e):
   return render_template("404.html")
 
 if __name__ == '__main__':
-    app.secret_key = "^A%DJAJU^JJ123"
+    app.config['SECRET_KEY'] = "^A%DJAJU^JJ123"
     app.config['SESSION_TYPE'] = 'filesystem'
     app.run(debug=True)
