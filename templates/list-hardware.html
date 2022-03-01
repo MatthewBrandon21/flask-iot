@@ -1,0 +1,190 @@
+{% extends 'master-layout.html' %} {% block title %} List Hardware {% endblock
+%} {% block content %}
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Hardware Management</h1>
+<button
+  type="button"
+  class="btn btn-info btn-lg"
+  data-toggle="modal"
+  data-target="#myModalAdd"
+  style="margin-bottom: 25px"
+>
+  Add Hardware
+</button>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">List Hardware</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table
+        class="table table-bordered"
+        id="dataTable"
+        width="100%"
+        cellspacing="0"
+      >
+        <thead>
+          <tr>
+            <th>ID Hardware</th>
+            <th>Name</th>
+            <th>Security Code</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>ID Hardware</th>
+            <th>Name</th>
+            <th>Security Code</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </tfoot>
+        <tbody>
+          {% for row in hardware %}
+          <tr>
+            <td>{{ row.id_hardware }}</td>
+            <td>{{ row.name }}</td>
+            <td>{{ row.security_code }}</td>
+            <td>{% if row.status == 0 %} Off {% else %} On {% endif %}</td>
+            <td>
+              <a
+                href="#!"
+                class="btn btn-warning btn-xs"
+                data-toggle="modal"
+                data-target="#modalEdit{{ row.id_hardware }}"
+                >Edit</a
+              >
+              <a
+                href="/deletehardware/{{ row.id_hardware }}"
+                class="btn btn-danger btn-xs"
+                onclick="return confirm('This action cannot be undone?')"
+                >Delete</a
+              >
+              <a
+                href="/hardware-details?name={{ row.name }}&id_hardware={{ row.id_hardware }}"
+                class="btn btn-primary btn-xs"
+                >Details</a
+              >
+            </td>
+          </tr>
+
+          <div
+            id="modalEdit{{ row.id_hardware }}"
+            class="modal fade"
+            role="dialog"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                  </button>
+
+                  <h4 class="modal-title">Edit Hardware</h4>
+                </div>
+
+                <div class="modal-body">
+                  <form action="{{ url_for('updatehardware') }}" method="POST">
+                    <div class="form-group">
+                      <input
+                        type="hidden"
+                        name="id_hardware"
+                        value="{{ row.id_hardware }}"
+                      />
+                      <label>Name:</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="name"
+                        value="{{ row.name }}"
+                      />
+                      <label>Security Code:</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="security_code"
+                        value="{{ row.security_code }}"
+                      />
+                      <label>Status:</label>
+                      <select class="form-control" id="status" name="status">
+                        {% if row.status == 0 %}
+                        <option selected value="{{ row.status }}">Off</option>
+                        {% else %}
+                        <option selected value="{{ row.status }}">On</option>
+                        {% endif %}
+                        <option value="1">On</option>
+                        <option value="0">Off</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <button class="btn btn-warning" type="submit">
+                        Update
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-default"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="myModalAdd" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+
+        <h4 class="modal-title">Add Hardware</h4>
+      </div>
+
+      <div class="modal-body">
+        <form action="{{ url_for('addhardware') }}" method="POST">
+          <div class="form-group">
+            <label>Name:</label>
+            <input type="text" class="form-control" name="name" />
+            <label>Security Code:</label>
+            <input type="text" class="form-control" name="security_code" />
+            <label>Status:</label>
+            <select class="form-control" id="status" name="status">
+              <option selected value="1">On</option>
+              <option value="0">Off</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-primary" type="submit">Add</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

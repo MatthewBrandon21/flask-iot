@@ -1,0 +1,156 @@
+{% extends 'master-layout.html' %} {% block title %} Dashboard {% endblock %} {%
+block content %}
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h6 class="h3 mb-0 text-gray-800">Dashboard</h6>
+</div>
+
+<!-- Content Row -->
+<div class="row">
+  <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div
+              class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+            >
+              Users
+            </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">
+              {{ usercount[0].usercount }}
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-users"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div
+              class="text-xs font-weight-bold text-success text-uppercase mb-1"
+            >
+              Hardware
+            </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">
+              {{ hardwarecount[0].hardwarecount }}
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-microchip"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Content Row -->
+
+<div class="row">
+  <!-- Area Chart -->
+  <div class="col-xl-8 col-lg-7">
+    <div class="card shadow mb-4">
+      <!-- Card Header - Dropdown -->
+      <div
+        class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+      >
+        <h1 class="h3 mb-2 text-gray-800">Last Hardware Update</h1>
+      </div>
+      <!-- Card Body -->
+      <div class="card-body">
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table
+                class="table table-bordered"
+                id="dataTable"
+                width="100%"
+                cellspacing="0"
+              >
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>PH Level</th>
+                    <th>Temperature</th>
+                    <th>Humidity</th>
+                    <th>Water Level</th>
+                    <th>Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in hardware_log %}
+                  <tr>
+                    <td>{{ row.hardwarename }}</td>
+                    <td>{{ row.ph_level }}</td>
+                    <td>{{ row.temperature }}</td>
+                    <td>{{ row.humidity }}</td>
+                    <td>{{ row.water_level }}</td>
+                    <td>{{ row.time }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pie Chart -->
+  <div class="col-xl-4 col-lg-5">
+    <div class="card shadow mb-4">
+      <!-- Card Header - Dropdown -->
+      <div
+        class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+      >
+        <h6 class="h3 mb-2 text-gray-800">Hardware List</h6>
+      </div>
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="card shadow mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table
+                class="table table-bordered"
+                id="dataTable"
+                width="100%"
+                cellspacing="0"
+              >
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in hardware %}
+                  <tr>
+                    <td>{{ row.name }}</td>
+                    <td>
+                      {% if row.status == 0 %} Off {% else %} On {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

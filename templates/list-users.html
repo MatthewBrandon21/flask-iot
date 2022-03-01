@@ -1,0 +1,164 @@
+{% extends 'master-layout.html' %} {% block title %} List Users {% endblock %}
+{% block content %}
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Users Management</h1>
+<button
+  type="button"
+  class="btn btn-info btn-lg"
+  data-toggle="modal"
+  data-target="#myModalAdd"
+  style="margin-bottom: 25px"
+>
+  Add User
+</button>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">List Users</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table
+        class="table table-bordered"
+        id="dataTable"
+        width="100%"
+        cellspacing="0"
+      >
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+        </tfoot>
+        <tbody>
+          {% for row in users %}
+          <tr>
+            <td>{{ row.first_name }} {{ row.last_name }}</td>
+            <td>{{ row.email }}</td>
+            <td>
+              <a
+                href="#!"
+                class="btn btn-warning btn-xs"
+                data-toggle="modal"
+                data-target="#modalEdit{{ row.id_user }}"
+                >Edit</a
+              >
+              <a
+                href="/deleteuser/{{ row.id_user }}"
+                class="btn btn-danger btn-xs"
+                onclick="return confirm('This action cannot be undone?')"
+                >Delete</a
+              >
+            </td>
+          </tr>
+
+          <div id="modalEdit{{ row.id_user }}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                  </button>
+
+                  <h4 class="modal-title">Edit User</h4>
+                </div>
+
+                <div class="modal-body">
+                  <form action="{{ url_for('updateuser') }}" method="POST">
+                    <div class="form-group">
+                      <input
+                        type="hidden"
+                        name="id_user"
+                        value="{{ row.id_user }}"
+                      />
+                      <label>FirstName:</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="firstname"
+                        value="{{ row.first_name }}"
+                      />
+                      <label>Lastname:</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="lastname"
+                        value="{{ row.last_name }}"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <button class="btn btn-warning" type="submit">
+                        Update
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-default"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="myModalAdd" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+
+        <h4 class="modal-title">Add User</h4>
+      </div>
+
+      <div class="modal-body">
+        <form action="{{ url_for('adduser') }}" method="POST">
+          <div class="form-group">
+            <label>Firstname:</label>
+            <input type="text" class="form-control" name="firstname" />
+            <label>Lastname:</label>
+            <input type="text" class="form-control" name="lastname" />
+            <label>Email:</label>
+            <input type="email" class="form-control" name="email" />
+            <label>Password:</label>
+            <input type="password" class="form-control" name="password" />
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-primary" type="submit">Add</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
