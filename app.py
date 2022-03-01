@@ -229,4 +229,5 @@ def not_found(e):
 
 if __name__ == '__main__':
     app.secret_key = "^A%DJAJU^JJ123"
+    app.config['SESSION_TYPE'] = 'filesystem'
     app.run(debug=True)
