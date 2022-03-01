@@ -4,7 +4,7 @@ import bcrypt
 import os
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = "^A%DJAJU^JJ123"
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['MYSQL_HOST'] = 'sql6.freemysqlhosting.net'
 app.config['MYSQL_USER'] = 'sql6476219'
@@ -231,4 +231,6 @@ def not_found(e):
   return render_template("404.html")
 
 if __name__ == '__main__':
+    app.secret_key = "^A%DJAJU^JJ123"
+    app.config['SESSION_TYPE'] = 'filesystem'
     app.run(debug=True)
