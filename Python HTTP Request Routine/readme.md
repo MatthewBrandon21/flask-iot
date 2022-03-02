@@ -20,7 +20,7 @@
 | `water_level`   | `int`    | **Required**.                    |
 | `image`         | `blob`   | **Required**.                    |
 
-#### Get item
+#### Get hardware status
 
 ```http
   GET /checkhardwarestatus/${id_hardware}
