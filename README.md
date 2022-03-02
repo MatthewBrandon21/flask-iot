@@ -25,3 +25,5 @@
 <p align="Center">
   <img width="800" src="Documentation/hardware-details.png" />
 </p>
+
+## <i>If need help, feel free to contact me!</i>
